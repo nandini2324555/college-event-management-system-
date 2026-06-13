@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Successful</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --success: #059669;
+            --success-bg: #ecfdf5;
+            --success-border: #a7f3d0;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --primary: #4f46e5;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo-icon {
+            width: 30px; height: 30px;
+            background: var(--primary); color: white;
+            border-radius: 7px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800;
+        }
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        .success-card {
+            max-width: 560px;
+            width: 100%;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px 32px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            animation: slideUp 0.4s ease;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .success-icon {
+            width: 72px; height: 72px;
+            background: var(--success-bg);
+            border: 2px solid var(--success-border);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2rem;
+        }
+        .success-card h1 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            color: var(--success);
+        }
+        .success-card .subtitle {
+            color: var(--text-light);
+            margin-bottom: 24px;
+            font-size: 1rem;
+        }
+        .success-card h2 {
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+        .success-card .student-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        .success-card .event-name {
+            font-size: 1rem;
+            color: var(--text);
+            margin-bottom: 24px;
+        }
+        .success-card .event-name strong {
+            color: var(--success);
+        }
+        .topics-section {
+            text-align: left;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin-bottom: 24px;
+        }
+        .topics-section h3 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+        .topic-tag {
+            display: inline-block;
+            background: white;
+            border: 1px solid var(--border);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin: 3px 4px 3px 0;
+            color: var(--text);
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn:hover {
+            background: var(--primary-hover, #4338ca);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+        .btn-outline {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            margin-left: 8px;
+        }
+        .btn-outline:hover {
+            background: #eef2ff;
+        }
+        .no-topics {
+            color: var(--text-light);
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 480px) {
+            .success-card { padding: 28px 20px; }
+            .btn-outline { margin-left: 0; margin-top: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="/" class="logo">
+                <span class="logo-icon">E</span>
+                <span>College Events</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="success-card">
+            <div class="success-icon">✓</div>
+            <h1>Registration Successful!</h1>
+            <p class="subtitle">Thank you for registering. Here are your details:</p>
+
+            <h2>Student Name</h2>
+            <p class="student-name">{{ registration.name }}</p>
+
+            <div class="event-name">
+                You have successfully registered for<br>
+                <strong>{{ event.title }}</strong>
+            </div>
+
+            <div class="topics-section">
+                <h3>Selected Topics</h3>
+                {% if topic_list %}
+                    {% for topic in topic_list %}
+                    <span class="topic-tag">{{ topic }}</span>
+                    {% endfor %}
+                {% else %}
+                    <p class="no-topics">All topics selected for this event.</p>
+                {% endif %}
+            </div>
+
+            <a href="/" class="btn">Back to Events</a>
+        </div>
+    </main>
+</body>
+</html>
