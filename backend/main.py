@@ -20,9 +20,9 @@ from fastapi import Query
 from dotenv import load_dotenv
 load_dotenv()
 
-from database import engine, SessionLocal
-import models
-from schemas import EventCreate, RegistrationCreate, EventUpdate, TopicCreate
+from backend.database import engine, SessionLocal
+from backend import models
+from backend.schemas import EventCreate, RegistrationCreate, EventUpdate, TopicCreate
 
 models.Base.metadata.create_all(bind=engine)
 
