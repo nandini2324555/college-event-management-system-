@@ -36,3 +36,43 @@
     transform: rotate(360deg);
   }
 }
+
+.app-container {
+  padding: 20px;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.app-header h1 {
+  margin: 0;
+}
+
+.language-switcher {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.language-switcher label {
+  font-weight: 600;
+}
+
+.language-switcher select {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.event-card-inline {
+  border: 1px solid black;
+  margin: 10px;
+  padding: 10px;
+}

@@ -1,0 +1,11 @@
+{
+  "appTitle": "College Events",
+  "language": "Language",
+  "languages": {
+    "en": "English",
+    "te": "Telugu"
+  },
+  "loadingEvents": "Loading events...",
+  "errorLoadingEvents": "Unable to load events.",
+  "noEventsFound": "No events found"
+}
