@@ -22,7 +22,7 @@ function App() {
     setLoading(true);
     setEventsError(false);
 
-    fetch("http://127.0.0.1:8000/events")
+    fetch("https://aspect-illicitly-excluding.ngrok-free.dev/events")
       .then(res => res.json())
       .then(data => setEvents(Array.isArray(data) ? data : []))
       .catch(() => setEventsError(true))

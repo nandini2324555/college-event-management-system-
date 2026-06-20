@@ -1,32 +1,27 @@
 import os
 from datetime import datetime
-from fastapi import FastAPI, Depends, Request, Form, Cookie
-from sqlalchemy.orm import Session
-from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
-from fastapi.responses import RedirectResponse
-from fastapi import Query
-
-import os
-from datetime import datetime
 from pathlib import Path
-from fastapi import FastAPI, Depends, Request, Form, Cookie
+
+from fastapi import FastAPI, Depends, Request, Form, Cookie, Query
+from pydantic import BaseModel
+
 from sqlalchemy.orm import Session
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import RedirectResponse
-from fastapi import Query
 
 from dotenv import load_dotenv
-load_dotenv()
 
-from backend.database import engine, SessionLocal
-from backend import models
-from backend.schemas import EventCreate, RegistrationCreate, EventUpdate, TopicCreate
-
-models.Base.metadata.create_all(bind=engine)
+# ✅ FIXED IMPORTS (IMPORTANT)
+from database import engine, SessionLocal
+import models
+from schemas import EventCreate, RegistrationCreate, EventUpdate, TopicCreate
+from ai import ask_ollama
+#
+# models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+class Prompt(BaseModel):
+    prompt: str
 TEMPLATE_DIR = str(Path(__file__).resolve().parent / "templates")
 templates = Jinja2Templates(directory=TEMPLATE_DIR)
 
@@ -549,3 +544,9 @@ def create_admin(db: Session = Depends(get_db)):
     db.add(admin)
     db.commit()
     return {"message": f"Admin '{ADMIN_USERNAME}' created successfully"}
+
+
+@app.post("/ai-assistant")
+def ai_assistant(data: Prompt):
+    reply = ask_ollama(data.prompt)
+    return {"response": reply}

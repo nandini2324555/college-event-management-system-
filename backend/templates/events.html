@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Events - College Event Management</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --secondary: #0ea5e9;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+            --shadow-lg: 0 20px 45px rgba(15, 23, 42, 0.12);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: radial-gradient(circle at top left, rgba(79, 70, 229, 0.10), transparent 32rem), var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+        }
+
+        .logo {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-mark {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 800;
+            padding: 9px 14px;
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover { background: #eef2ff; color: var(--primary); }
+        .nav-link.btn-login { background: var(--primary); color: white; }
+        .nav-link.btn-login:hover { background: var(--primary-hover); color: white; }
+        .nav-link.btn-logout { color: #dc2626; }
+        .nav-link.btn-logout:hover { background: #fef2f2; color: #dc2626; }
+
+        .page-hero {
+            padding: 46px 0 28px;
+        }
+
+        .page-hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            letter-spacing: -0.04em;
+            margin-bottom: 10px;
+        }
+
+        .page-hero p { color: var(--text-light); }
+
+        .section { padding: 24px 0 44px; }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            letter-spacing: -0.03em;
+            margin-bottom: 6px;
+        }
+
+        .section-subtitle { color: var(--text-light); }
+
+        .filter-panel {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 18px;
+            box-shadow: var(--shadow);
+            display: grid;
+            grid-template-columns: 1.4fr 1fr auto auto;
+            gap: 12px;
+            align-items: end;
+            margin-bottom: 28px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 800;
+            font-size: 0.78rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: #f8fafc;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+
+        .btn,
+        .btn-sm {
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 800;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .btn { padding: 12px 18px; }
+        .btn-sm { padding: 9px 14px; font-size: 0.86rem; }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); box-shadow: var(--shadow); }
+
+        .btn-outline {
+            background: white;
+            color: var(--primary);
+            border: 2px solid #c7d2fe;
+        }
+
+        .btn-outline:hover { background: #eef2ff; }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover { background: #e2e8f0; }
+
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .event-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            min-height: 260px;
+            transition: all 0.2s;
+        }
+
+        .event-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            border-color: #c7d2fe;
+        }
+
+        .badge {
+            display: inline-flex;
+            width: fit-content;
+            padding: 5px 10px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 12px;
+        }
+
+        .badge-technical { background: #e0f2fe; color: #0369a1; }
+        .badge-workshop { background: #fef3c7; color: #92400e; }
+        .badge-cultural { background: #fce7f3; color: #9d174d; }
+        .badge-sports { background: #dcfce7; color: #166534; }
+        .badge-seminar { background: #ede9fe; color: #5b21b6; }
+
+        .event-card h3 {
+            font-size: 1.15rem;
+            line-height: 1.3;
+            margin-bottom: 8px;
+        }
+
+        .event-desc {
+            color: var(--text-light);
+            font-size: 0.92rem;
+            margin-bottom: 14px;
+            flex: 1;
+        }
+
+        .event-meta {
+            color: var(--text-light);
+            font-size: 0.88rem;
+            margin-bottom: 16px;
+        }
+
+        .event-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: auto;
+        }
+
+        .admin-card-actions {
+            display: none;
+            gap: 8px;
+            margin-top: auto;
+        }
+
+        body.admin-logged-in .admin-card-actions { display: flex; }
+        body.admin-logged-in .event-actions { display: none; }
+
+        .btn-edit { background: #fef3c7; color: #92400e; }
+        .btn-delete { background: #fef2f2; color: #dc2626; }
+
+        .empty-state {
+            background: var(--card-bg);
+            border: 1px dashed #cbd5e1;
+            border-radius: 18px;
+            padding: 44px 20px;
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        .empty-state strong {
+            display: block;
+            color: var(--text);
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+        }
+
+        @media (max-width: 960px) {
+            .event-grid { grid-template-columns: repeat(2, 1fr); }
+            .filter-panel { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 640px) {
+            header .container {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+            .nav-links { justify-content: center; }
+            .section-header {
+                flex-direction: column;
+                align-items: start;
+            }
+            .event-grid,
+            .filter-panel { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body class="{% if session == 'admin_token' %}admin-logged-in{% endif %}">
+    <header>
+        <div class="container">
+            <a href="/" class="logo">
+                <span class="logo-mark">E</span>
+                <span>College Events</span>
+            </a>
+            <nav class="nav-links">
+                <a href="/" class="nav-link" data-i18n="nav.home">Home</a>
+                <a href="/events" class="nav-link" data-i18n="nav.events">Events</a>
+                <a href="/ai-assistant" class="nav-link" data-i18n="nav.ai_assistant">AI Assistant</a>
+                {% if session == 'admin_token' %}
+                <a href="/dashboard" class="nav-link" data-i18n="nav.dashboard">Dashboard</a>
+                <a href="/logout" class="nav-link btn-logout" data-i18n="nav.logout">Logout</a>
+                {% else %}
+                <a href="/login" class="nav-link btn-login" data-i18n="nav.admin_login">Admin Login</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <h1 data-i18n="all_events.title">All Events</h1>
+                <p data-i18n="all_events.subtitle">Browse every registered event and filter by category or keyword.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title" data-i18n="search.title">Find Events</h2>
+                        <p class="section-subtitle" data-i18n="search.subtitle">Search by title, description, or category.</p>
+                    </div>
+                    <a href="/register" class="btn btn-primary" style="text-decoration:none;" data-i18n="hero.btn.register">Student Registration</a>
+                </div>
+
+                <form method="get" action="/events" class="filter-panel">
+                    <div class="form-group">
+                        <label for="search" data-i18n="search.keyword">Keyword</label>
+                        <input id="search" name="search" type="search" value="{{ search or '' }}" placeholder="AI, Python, sports...">
+                    </div>
+                    <div class="form-group">
+                        <label for="category" data-i18n="search.category">Category</label>
+                        <select id="category" name="category">
+                            <option value="" data-i18n="search.category_all">All Categories</option>
+                            {% for item in categories %}
+                            <option value="{{ item.name }}" {% if category == item.name %}selected{% endif %}>{{ item.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>&nbsp;</label>
+                        <button type="submit" class="btn btn-primary" data-i18n="search.submit">Search</button>
+                    </div>
+                    {% if search or category %}
+                    <div class="form-group">
+                        <label>&nbsp;</label>
+                        <a href="/events" class="btn btn-secondary" style="text-decoration:none;" data-i18n="search.clear">Clear</a>
+                    </div>
+                    {% endif %}
+                </form>
+
+                {% if events %}
+                <div class="event-grid">
+                    {% for event in events %}
+                    <div class="event-card">
+                        <span class="badge badge-{{ event.category|lower }}">{{ event.category }}</span>
+                        <h3>{{ event.title }}</h3>
+                        <p class="event-desc">{{ event.description }}</p>
+                        <div class="event-meta">
+                            <span data-i18n="events.date">Date:</span> {{ event.date }}<br>
+                            <span data-i18n="events.deadline">Deadline:</span> {{ event.deadline or 'Open' }}
+                            {% if session == 'admin_token' %}
+                            <br><span data-i18n="events.registrations">Registrations:</span> {{ event.registrations }}
+                            {% endif %}
+                        </div>
+                        <div class="event-actions">
+                            <a href="/event/{{ event.id }}" class="btn-sm btn-primary" data-i18n="events.view_details">View Details</a>
+                            <a href="/event/{{ event.id }}" class="btn-sm btn-outline" data-i18n="events.register">Register</a>
+                        </div>
+                        <div class="admin-card-actions">
+                            <a href="/edit/{{ event.id }}" class="btn-sm btn-edit" data-i18n="events.edit">Edit</a>
+                            <button class="btn-sm btn-delete" onclick="confirmDelete({{ event.id }})" data-i18n="events.delete">Delete</button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="empty-state">
+                    <strong data-i18n="events.no_events">No events found.</strong>
+                    <p data-i18n="hero.subtitle">Try a different keyword or category.</p>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    <script src="/i18n/i18n.js"></script>
+    <script>
+        function confirmDelete(eventId) {
+            if (confirm("Are you sure you want to delete this event?")) {
+                fetch(`/events/${eventId}`, { method: 'DELETE' })
+                    .then(() => location.reload());
+            }
+        }
+    </script>
+</body>
+</html>

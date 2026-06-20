@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Assistant - College Event Management</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --secondary: #0ea5e9;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+            --shadow-lg: 0 20px 45px rgba(15, 23, 42, 0.12);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background:
+                radial-gradient(circle at top right, rgba(79, 70, 229, 0.12), transparent 34rem),
+                radial-gradient(circle at bottom left, rgba(14, 165, 233, 0.10), transparent 30rem),
+                var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+        }
+
+        .logo {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-mark {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 800;
+            padding: 9px 14px;
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover { background: #eef2ff; color: var(--primary); }
+        .nav-link.active { background: var(--primary); color: white; }
+        .nav-link.btn-login { background: var(--primary); color: white; }
+        .nav-link.btn-login:hover { background: var(--primary-hover); color: white; }
+        .nav-link.btn-logout { color: #dc2626; }
+        .nav-link.btn-logout:hover { background: #fef2f2; color: #dc2626; }
+
+        .page-hero {
+            padding: 54px 0 34px;
+            text-align: center;
+        }
+
+        .page-hero h1 {
+            font-size: clamp(2rem, 5vw, 3.4rem);
+            letter-spacing: -0.04em;
+            margin-bottom: 12px;
+        }
+
+        .page-hero p {
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+        }
+
+        .ai-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+            align-items: start;
+            padding: 10px 0 54px;
+        }
+
+        .ai-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .ai-card h2 {
+            font-size: 1.35rem;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        .ai-card > p {
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .interest-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .interest-chip {
+            border: 1px solid #c7d2fe;
+            background: #eef2ff;
+            color: var(--primary);
+            border-radius: 999px;
+            padding: 9px 14px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .interest-chip:hover,
+        .interest-chip.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .btn {
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 800;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            padding: 12px 18px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        .status {
+            min-height: 22px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin: 12px 0;
+        }
+
+        .recommendation-results {
+            display: grid;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .recommendation-card {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px;
+            background: #f8fafc;
+        }
+
+        .recommendation-card h3 {
+            font-size: 1.05rem;
+            margin-bottom: 6px;
+        }
+
+        .recommendation-card p {
+            color: var(--text-light);
+            font-size: 0.92rem;
+            margin-bottom: 8px;
+        }
+
+        .recommendation-card .reason {
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+
+        .recommendation-card a {
+            color: var(--primary);
+            font-weight: 900;
+            text-decoration: none;
+        }
+
+        .chat-window {
+            height: 360px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 16px;
+            background: #f8fafc;
+            margin-bottom: 14px;
+        }
+
+        .chat-message {
+            padding: 11px 13px;
+            border-radius: 14px;
+            margin-bottom: 10px;
+            max-width: 88%;
+            white-space: pre-wrap;
+            font-size: 0.94rem;
+        }
+
+        .chat-message.user {
+            background: var(--primary);
+            color: white;
+            margin-left: auto;
+        }
+
+        .chat-message.bot {
+            background: white;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .chat-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-form input {
+            flex: 1;
+            min-width: 0;
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: white;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+
+        .empty-recommendations {
+            border: 1px dashed #cbd5e1;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            color: var(--text-light);
+            background: #f8fafc;
+        }
+
+        @media (max-width: 960px) {
+            .ai-layout { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 640px) {
+            header .container {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+            .nav-links { justify-content: center; }
+            .ai-card { padding: 20px; }
+            .chat-form { flex-direction: column; }
+            .chat-window { height: 320px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="/" class="logo">
+                <span class="logo-mark">E</span>
+                <span>College Events</span>
+            </a>
+            <nav class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/events" class="nav-link">Events</a>
+                <a href="/ai-assistant" class="nav-link active">AI Assistant</a>
+                {% if session == 'admin_token' %}
+                <a href="/dashboard" class="nav-link">Dashboard</a>
+                <a href="/logout" class="nav-link btn-logout">Logout</a>
+                {% else %}
+                <a href="/login" class="nav-link btn-login">Admin Login</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <h1>AI Event Assistant</h1>
+                <p>Ask questions about campus events and get personalized recommendations based on your interests.</p>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="ai-layout">
+                <div class="ai-card">
+                    <h2>AI Event Recommendation</h2>
+                    <p>Select one or more interests to receive suitable event suggestions.</p>
+
+                    <div class="interest-grid" id="interest-grid">
+                        {% for interest in interests %}
+                        <button type="button" class="interest-chip" data-interest="{{ interest }}">{{ interest }}</button>
+                        {% endfor %}
+                    </div>
+
+                    <button type="button" class="btn btn-primary" id="recommendation-submit">Get Recommendations</button>
+                    <button type="button" class="btn btn-secondary" id="clear-interests">Clear</button>
+                    <div class="status" id="recommendation-status"></div>
+                    <div class="recommendation-results" id="recommendation-results"></div>
+                </div>
+
+                <div class="ai-card">
+                    <h2>🤖 AI Assistant</h2>
+                    <p>Hello! How can I help you?</p>
+
+                    <div class="chat-window" id="chat-window">
+                        <div class="chat-message bot">
+                            Welcome! Ask me anything related to college events.
+                        </div>
+                    </div>
+
+                    <form class="chat-form" id="chat-form">
+                        <input id="chat-input" type="text" placeholder="Type your question here..." required>
+                        <button type="submit" class="btn btn-primary">Ask</button>
+                     </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const selectedInterests = new Set();
+        const interestGrid = document.getElementById('interest-grid');
+        const recommendationStatus = document.getElementById('recommendation-status');
+        const recommendationResults = document.getElementById('recommendation-results');
+        const recommendationSubmit = document.getElementById('recommendation-submit');
+        const clearInterests = document.getElementById('clear-interests');
+        const chatWindow = document.getElementById('chat-window');
+        const chatForm = document.getElementById('chat-form');
+        const chatInput = document.getElementById('chat-input');
+
+        function escapeHTML(value) {
+            return String(value || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        async function postFormData(url, fields) {
+            const formData = new FormData();
+            Object.keys(fields).forEach(key => formData.append(key, fields[key]));
+
+            const response = await fetch(url, {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Request failed');
+            }
+
+            return data;
+        }
+
+        interestGrid.addEventListener('click', function(event) {
+            const chip = event.target.closest('.interest-chip');
+            if (!chip) return;
+
+            const interest = chip.dataset.interest;
+            if (selectedInterests.has(interest)) {
+                selectedInterests.delete(interest);
+                chip.classList.remove('active');
+            } else {
+                selectedInterests.add(interest);
+                chip.classList.add('active');
+            }
+
+            recommendationStatus.textContent = selectedInterests.size
+                ? `${selectedInterests.size} interest(s) selected.`
+                : 'Select at least one interest.';
+        });
+
+        clearInterests.addEventListener('click', function() {
+            selectedInterests.clear();
+            document.querySelectorAll('.interest-chip').forEach(chip => chip.classList.remove('active'));
+            recommendationStatus.textContent = 'Interests cleared.';
+            recommendationResults.innerHTML = '';
+        });
+
+        recommendationSubmit.addEventListener('click', async function() {
+            const interests = Array.from(selectedInterests).join(', ');
+            if (!interests) {
+                recommendationStatus.textContent = 'Select at least one interest first.';
+                return;
+            }
+
+            recommendationSubmit.disabled = true;
+            recommendationSubmit.textContent = 'Checking...';
+            recommendationStatus.textContent = 'Finding suitable events...';
+            recommendationResults.innerHTML = '';
+
+            try {
+                const data = await postFormData('/api/ai/recommendations', { interests });
+                if (!data.recommendations.length) {
+                    recommendationResults.innerHTML = '<div class="empty-recommendations">No events found yet. Check back after the admin adds events.</div>';
+                    recommendationStatus.textContent = 'No recommendations available.';
+                    return;
+                }
+
+                recommendationResults.innerHTML = data.recommendations.map(item => `
+                    <div class="recommendation-card">
+                        <h3>${escapeHTML(item.title)}</h3>
+                        <p><strong>${escapeHTML(item.category)}</strong> | ${escapeHTML(item.date)} | Deadline: ${escapeHTML(item.deadline || 'Open')}</p>
+                        <p>${escapeHTML(item.description)}</p>
+                        <div class="reason">${escapeHTML(item.reasons.join(', '))}</div>
+                        <p style="margin-top:10px;"><a href="/event/${item.id}">View details</a></p>
+                    </div>
+                `).join('');
+                recommendationStatus.textContent = `Recommendations for: ${escapeHTML(interests)}`;
+            } catch (error) {
+                recommendationStatus.textContent = error.message;
+            } finally {
+                recommendationSubmit.disabled = false;
+                recommendationSubmit.textContent = 'Get Recommendations';
+            }
+        });
+
+        function addChatMessage(text, type) {
+            const message = document.createElement('div');
+            message.className = `chat-message ${type}`;
+            message.textContent = text;
+            chatWindow.appendChild(message);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        chatForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            addChatMessage(message, 'user');
+            chatInput.value = '';
+            addChatMessage('Thinking...', 'bot');
+
+            try {
+                const data = await postFormData('/api/ai/chat', { message });
+                const botMessages = Array.from(chatWindow.querySelectorAll('.chat-message.bot'));
+                const lastBotMessage = botMessages[botMessages.length - 1];
+                if (lastBotMessage && lastBotMessage.textContent === 'Thinking...') {
+                    lastBotMessage.textContent = data.answer;
+                }
+            } catch (error) {
+                const botMessages = Array.from(chatWindow.querySelectorAll('.chat-message.bot'));
+                const lastBotMessage = botMessages[botMessages.length - 1];
+                if (lastBotMessage && lastBotMessage.textContent === 'Thinking...') {
+                    lastBotMessage.textContent = error.message;
+                }
+            }
+        });
+    </script>
+    <script src="/i18n/i18n.js"></script>
+</body>
+</html>
