@@ -36,7 +36,6 @@ matplotlib==3.10.9
 narwhals==2.21.2
 nltk==3.9.4
 numpy==2.3.2
-ollama==0.6.2
 packaging==26.2
 pandas==2.3.1
 passlib==1.7.4
