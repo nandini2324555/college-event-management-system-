@@ -18,6 +18,7 @@ from pathlib import Path
 
 from .database import engine, SessionLocal
 from . import models
+from .schemas import EventCreate, EventUpdate, RegistrationCreate
 
 app = FastAPI()
 
