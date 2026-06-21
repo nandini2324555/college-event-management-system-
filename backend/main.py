@@ -15,11 +15,11 @@ from dotenv import load_dotenv
 from .database import engine, SessionLocal
 from . import models
 
+app = FastAPI()
+
 @app.on_event("startup")
 def startup():
     models.Base.metadata.create_all(bind=engine)
-
-app = FastAPI()
 class Prompt(BaseModel):
     prompt: str
 TEMPLATE_DIR = str(Path(__file__).resolve().parent / "templates")
