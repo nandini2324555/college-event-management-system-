@@ -10,8 +10,12 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 from dotenv import load_dotenv
+load_dotenv()
 
 # ✅ FIXED IMPORTS (IMPORTANT)
+import os
+from pathlib import Path
+
 from .database import engine, SessionLocal
 from . import models
 
