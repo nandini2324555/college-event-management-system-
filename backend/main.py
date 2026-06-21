@@ -34,6 +34,10 @@ def get_db():
         yield db
     finally:
         db.close()
+        
+@app.on_event("startup")
+def startup():
+    models.Base.metadata.create_all(bind=engine)
 
 def send_confirmation_email(name: str, email: str, event_title: str, topics: str = ""):
     import smtplib
