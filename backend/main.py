@@ -14,10 +14,9 @@ from dotenv import load_dotenv
 # ✅ FIXED IMPORTS (IMPORTANT)
 from .database import engine, SessionLocal
 from . import models
-from .schemas import EventCreate, RegistrationCreate, EventUpdate, TopicCreate
-from .ai import ask_ollama
-#
-# models.Base.metadata.create_all(bind=engine)
+
+
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 class Prompt(BaseModel):
