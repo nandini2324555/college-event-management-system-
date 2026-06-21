@@ -15,8 +15,9 @@ from dotenv import load_dotenv
 from .database import engine, SessionLocal
 from . import models
 
-
-models.Base.metadata.create_all(bind=engine)
+@app.on_event("startup")
+def startup():
+    models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 class Prompt(BaseModel):
@@ -34,10 +35,6 @@ def get_db():
         yield db
     finally:
         db.close()
-        
-@app.on_event("startup")
-def startup():
-    models.Base.metadata.create_all(bind=engine)
 
 def send_confirmation_email(name: str, email: str, event_title: str, topics: str = ""):
     import smtplib
