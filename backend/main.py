@@ -12,10 +12,10 @@ from fastapi.templating import Jinja2Templates
 from dotenv import load_dotenv
 
 # ✅ FIXED IMPORTS (IMPORTANT)
-from database import engine, SessionLocal
-import models
-from schemas import EventCreate, RegistrationCreate, EventUpdate, TopicCreate
-from ai import ask_ollama
+from .database import engine, SessionLocal
+from . import models
+from .schemas import EventCreate, RegistrationCreate, EventUpdate, TopicCreate
+from .ai import ask_ollama
 #
 # models.Base.metadata.create_all(bind=engine)
 
