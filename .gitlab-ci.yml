@@ -6,3 +6,6 @@ test:
   script:
     - pip install -r requirements-dev.txt
     - pytest --cov=. --cov-report=term
+  artifacts:
+    paths:
+    - coverage.xml
