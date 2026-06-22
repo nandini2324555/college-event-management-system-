@@ -21,7 +21,7 @@ repos:
     hooks:
       - id: pip-audit
   - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.15.18
-  hooks:
-    - id: ruff
-    - id: ruff-format
+    rev: v0.15.18
+    hooks:
+      - id: ruff
+      - id: ruff-format
