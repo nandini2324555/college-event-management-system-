@@ -1,11 +1,26 @@
 stages:
+  - lint
+  - type_check
   - test
+
+lint:
+  stage: lint
+  script:
+    - pip install -r requirements-dev.txt
+    - ruff check .
+
+type_check:
+  stage: type_check
+  script:
+    - pip install -r requirements-dev.txt
+    - mypy .
 
 test:
   stage: test
   script:
     - pip install -r requirements-dev.txt
     - pytest tests --cov=. --cov-report=xml --cov-report=term
+  coverage: '/TOTAL.*\s+(\d+%)$/'
   artifacts:
     paths:
       - coverage.xml
