@@ -1,7 +1,15 @@
 stages:
+  - format
   - lint
   - type_check
   - test
+  - coverage
+
+format:
+  stage: format
+  script:
+    - pip install -r requirements-dev.txt
+    - ruff format --check .
 
 lint:
   stage: lint
@@ -20,7 +28,11 @@ test:
   script:
     - pip install -r requirements-dev.txt
     - pytest tests --cov=. --cov-report=xml --cov-report=term
-  coverage: '/TOTAL.*\s+(\d+%)$/'
+  coverage: 
+    stage: coverage
+  script:
+    - pip install -r requirements-dev.txt
+    - pytest tests --cov=. --cov-report=xml --cov-report=term
   artifacts:
     paths:
       - coverage.xml
