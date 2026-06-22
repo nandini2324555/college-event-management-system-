@@ -4,4 +4,5 @@ stages:
 test:
   stage: test
   script:
-    - echo "Pipeline running"
+    - pip install -r requirements-dev.txt
+    - pytest --cov=. --cov-report=term
