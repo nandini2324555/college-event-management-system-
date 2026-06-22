@@ -3,3 +3,4 @@ mypy
 bandit
 pytest
 pytest-cov
+pip-audit
