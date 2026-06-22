@@ -27,9 +27,10 @@ test:
   stage: test
   script:
     - pip install -r requirements-dev.txt
-    - pytest tests --cov=. --cov-report=xml --cov-report=term
-  coverage: 
-    stage: coverage
+    - pytest tests
+
+coverage:
+  stage: coverage
   script:
     - pip install -r requirements-dev.txt
     - pytest tests --cov=. --cov-report=xml --cov-report=term
