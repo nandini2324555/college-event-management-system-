@@ -1,0 +1,22 @@
+concurrent = 1
+check_interval = 0
+shutdown_timeout = 0
+
+[session_server]
+  session_timeout = 1800
+
+[[runners]]
+  name = "College Event Management Runner"
+  url = "https://code.swecha.org"
+  id = 715
+  token = "glrt-qFVakdr6xNcFh8cKjZ3KLm86MQpwOjFpM3AKdDozCnU6MjdxdhU.01.1f0jw9nz2"
+  token_obtained_at = 2026-06-23T09:35:43Z
+  token_expires_at = 0001-01-01T00:00:00Z
+  executor = "shell"
+  shell = "pwsh"
+  [runners.cache]
+    MaxUploadedArchiveSize = 0
+    [runners.cache.s3]
+      AssumeRoleMaxConcurrency = 0
+    [runners.cache.gcs]
+    [runners.cache.azure]

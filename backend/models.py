@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
-from .database import Base
+from backend.database import Base
 
 
 class Event(Base):
@@ -13,7 +13,10 @@ class Event(Base):
     deadline = Column(String, nullable=True)
 
     topics = relationship("Topic", back_populates="event", cascade="all, delete-orphan")
-    registrations = relationship("Registration", back_populates="event", cascade="all, delete-orphan")
+    registrations = relationship(
+        "Registration", back_populates="event", cascade="all, delete-orphan"
+    )
+
 
 class Topic(Base):
     __tablename__ = "topics"
@@ -22,6 +25,7 @@ class Topic(Base):
     title = Column(String)
 
     event = relationship("Event", back_populates="topics")
+
 
 class Registration(Base):
     __tablename__ = "registrations"
@@ -32,6 +36,7 @@ class Registration(Base):
     topics = Column(String)
 
     event = relationship("Event", back_populates="registrations")
+
 
 class Admin(Base):
     __tablename__ = "admins"
