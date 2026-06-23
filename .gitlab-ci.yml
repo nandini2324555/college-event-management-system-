@@ -9,13 +9,13 @@ format:
   stage: format
   script:
     - pip install -r requirements-dev.txt
-    - ruff format --check .
+    - python -m ruff format --check .
 
 lint:
   stage: lint
   script:
     - pip install -r requirements-dev.txt
-    - ruff check .
+    - python -m ruff check .
 
 type_check:
   stage: type_check
