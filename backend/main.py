@@ -661,5 +661,4 @@ def create_admin(db: Session = Depends(get_db)):
 
 @app.post("/ai-assistant")
 def ai_assistant(data: Prompt):
-    reply = ask_ollama(data.prompt)
-    return {"response": reply}
+    return {"response": "AI Assistant is temporarily disabled"}
