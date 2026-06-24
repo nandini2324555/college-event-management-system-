@@ -172,10 +172,10 @@ async def register_submit(request: Request, db: Session = Depends(get_db)):
             {
                 "request": request,
                 "events": events,
-                "error":(
-                "All fields are required. "
-                "Please fill in your name, email, "
-                "and select an event."
+                "error": (
+                    "All fields are required. "
+                    "Please fill in your name, email, "
+                    "and select an event."
                 ),
             },
             status_code=400,
@@ -668,5 +668,3 @@ def create_admin(db: Session = Depends(get_db)):
     db.add(admin)
     db.commit()
     return {"message": f"Admin '{ADMIN_USERNAME}' created successfully"}
-
-
