@@ -27,7 +27,7 @@ type_check:
   stage: type_check
   script:
     - pip install -r requirements-dev.txt
-    - mypy .
+    - python -m mypy .
 
 test:
   stage: test
