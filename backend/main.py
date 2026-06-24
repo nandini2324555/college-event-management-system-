@@ -11,13 +11,14 @@ from fastapi.templating import Jinja2Templates
 
 from dotenv import load_dotenv
 
-load_dotenv()
 
 # ✅ FIXED IMPORTS (IMPORTANT)
 
 from .database import engine, SessionLocal
 from . import models
 from .schemas import EventCreate, EventUpdate, RegistrationCreate
+
+load_dotenv()
 
 app = FastAPI()
 
@@ -65,8 +66,12 @@ def send_confirmation_email(name: str, email: str, event_title: str, topics: str
             topic_text = f"\nSelected Topics:\n{topics}" if topics else ""
             body = (
                 f"Hello {name},\n\n"
-                f"Your registration for '{event_title}' has been completed successfully.{topic_text}\n\n"
-                f"Thank you for participating.\n\nRegards,\nCollege Event Management Team"
+                f"Your registration for '{event_title}' "
+                f"has been completed successfully."
+                f"{topic_text}\n\n"
+                f"Thank you for participating.\n\n"
+                "Regards,\n"
+                "College Event Management Team"
             )
             msg.attach(MIMEText(body, "plain"))
 
@@ -80,7 +85,9 @@ def send_confirmation_email(name: str, email: str, event_title: str, topics: str
             print(f"Email error: {e}")
     else:
         print(
-            f"[MOCK EMAIL] To: {email} | Registration confirmed for {event_title} | Topics: {topics}"
+            f"[MOCK EMAIL] To: {email} | "
+            f"Registration confirmed for {event_title} | "
+            f"Topics: {topics}"
         )
 
 
@@ -165,7 +172,11 @@ async def register_submit(request: Request, db: Session = Depends(get_db)):
             {
                 "request": request,
                 "events": events,
-                "error": "All fields are required. Please fill in your name, email, and select an event.",
+                "error":(
+                "All fields are required. "
+                "Please fill in your name, email, "
+                "and select an event."
+                ),
             },
             status_code=400,
         )
@@ -659,6 +670,3 @@ def create_admin(db: Session = Depends(get_db)):
     return {"message": f"Admin '{ADMIN_USERNAME}' created successfully"}
 
 
-@app.post("/ai-assistant")
-def ai_assistant(data: Prompt):
-    return {"response": "AI Assistant is temporarily disabled"}
