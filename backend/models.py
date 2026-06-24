@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from backend.database import Base
+from typing import Any
 
 
 class Event(Base):
@@ -12,8 +13,9 @@ class Event(Base):
     category = Column(String, default="Workshop")
     deadline = Column(String, nullable=True)
 
-    topics = relationship("Topic", back_populates="event", cascade="all, delete-orphan")
-    registrations = relationship(
+    topics: Any = relationship(
+        "Topic", back_populates="event", cascade="all, delete-orphan")
+    registrations: Any = relationship(
         "Registration", back_populates="event", cascade="all, delete-orphan"
     )
 
@@ -24,7 +26,7 @@ class Topic(Base):
     event_id = Column(Integer, ForeignKey("events.id"))
     title = Column(String)
 
-    event = relationship("Event", back_populates="topics")
+    event : Any = relationship("Event", back_populates="topics")
 
 
 class Registration(Base):
@@ -35,7 +37,7 @@ class Registration(Base):
     email = Column(String)
     topics = Column(String)
 
-    event = relationship("Event", back_populates="registrations")
+    event: Any = relationship("Event", back_populates="registrations")
 
 
 class Admin(Base):
