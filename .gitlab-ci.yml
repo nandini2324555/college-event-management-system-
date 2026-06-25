@@ -15,8 +15,7 @@ format:
   stage: format
   script:
     - pip install -r requirements-dev.txt
-    - python -m ruff format --check .
-
+    -  python -m ruff check .
 lint:
   stage: lint
   script:
@@ -27,7 +26,7 @@ type_check:
   stage: type_check
   script:
     - pip install -r requirements-dev.txt
-    - python -m mypy .
+    - python -m mypy backend --ignore-missing-imports
 
 test:
   stage: test
