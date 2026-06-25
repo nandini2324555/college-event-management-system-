@@ -1,13 +1,12 @@
 variables:
-  RUFF_CACHE_DIR: ".ruff_cache_disabled"
+  RUFF_CACHE_DIR: "tmp/ruff_cache"
+  MYPY_CACHE_DIR: "tmp/mypy_cache"
+  PYTEST_ADDOPTS: "--cache-clear"
 
 default:
   before_script:
     - python --version
-    - pip --version
-    - python -m pip install --upgrade pip
     - pip install -r requirements-dev.txt
-
 
 stages:
   - format
@@ -19,25 +18,22 @@ stages:
 format:
   stage: format
   script:
-   - python -m ruff format --check .
-    
-  
+    - python -m ruff format --check .
+
 lint:
   stage: lint
   script:
-    - pip install -r requirements-dev.txt
     - python -m ruff check .
 
 type_check:
   stage: type_check
   script:
-    - python -m mypy backend --ignore-missing-imports
-  
+    - python -m mypy backend --ignore-missing-imports --cache-dir=tmp/mypy_cache
+
 test:
   stage: test
   script:
-    - python -m pytest tests
-  
+    - python -m pytest tests --cache-clear
 
 coverage:
   stage: coverage
