@@ -5,6 +5,9 @@ default:
   before_script:
     - python --version
     - pip --version
+    - python -m pip install --upgrade pip
+    - pip install -r requirements-dev.txt
+
 
 stages:
   - format
@@ -16,9 +19,8 @@ stages:
 format:
   stage: format
   script:
-    - pip install -r requirements-dev.txt
-    - - python -m ruff format --check .
-  
+   - python -m ruff format --check .
+    
   
 lint:
   stage: lint
@@ -29,17 +31,23 @@ lint:
 type_check:
   stage: type_check
   script:
-    - pip install -r requirements-dev.txt
     - python -m mypy backend --ignore-missing-imports
-
+  
 test:
   stage: test
   script:
-    - pip install -r requirements-dev.txt
-    - - python -m pytest tests
+    - python -m pytest tests
+  
 
 coverage:
   stage: coverage
   script:
-    - pip install -r requirements-dev.txt
     - python -m pytest tests --cov=. --cov-report=xml --cov-report=term-missing
+  artifacts:
+    when: always
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
+    paths:
+      - coverage.xml
