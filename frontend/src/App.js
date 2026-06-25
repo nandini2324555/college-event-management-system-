@@ -22,7 +22,7 @@ function App() {
     setLoading(true);
     setEventsError(false);
 
-    fetch("https://aspect-illicitly-excluding.ngrok-free.dev/events")
+    fetch("https://college-event-management-system-3-b58b.onrender.com/events")
       .then(res => res.json())
       .then(data => setEvents(Array.isArray(data) ? data : []))
       .catch(() => setEventsError(true))
