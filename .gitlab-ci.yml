@@ -1,9 +1,21 @@
+default:
+  before_script:
+    - python --version
+    - pip --version
+
+stages:
+  - format
+  - lint
+  - type_check
+  - test
+  - coverage
+
 format:
   stage: format
   script:
     - pip install -r requirements-dev.txt
     - python -m ruff format .
-    - python -m ruff check .
+    
 
 lint:
   stage: lint
