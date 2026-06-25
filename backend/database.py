@@ -4,6 +4,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 
 # ✅ IMPORTANT FIX: use PostgreSQL from Render
 DATABASE_URL = os.getenv("DATABASE_URL")
+print("DATABASE_URL =", DATABASE_URL)
 
 # fallback (local development)
 if not DATABASE_URL:
