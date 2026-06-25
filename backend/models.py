@@ -14,7 +14,8 @@ class Event(Base):
     deadline = Column(String, nullable=True)
 
     topics: Any = relationship(
-        "Topic", back_populates="event", cascade="all, delete-orphan")
+        "Topic", back_populates="event", cascade="all, delete-orphan"
+    )
     registrations: Any = relationship(
         "Registration", back_populates="event", cascade="all, delete-orphan"
     )
@@ -26,7 +27,7 @@ class Topic(Base):
     event_id = Column(Integer, ForeignKey("events.id"))
     title = Column(String)
 
-    event : Any = relationship("Event", back_populates="topics")
+    event: Any = relationship("Event", back_populates="topics")
 
 
 class Registration(Base):

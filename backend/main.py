@@ -161,9 +161,9 @@ def register_form(
 @app.post("/register")
 async def register_submit(request: Request, db: Session = Depends(get_db)):
     form = await request.form()
-    event_id = form.get("event_id")
-    name = (form.get("name") or "").strip()
-    email = (form.get("email") or "").strip()
+    event_id = str(form.get("event_id") or "")
+    name = str(form.get("name") or "").strip()
+    email = str(form.get("email") or "").strip()
 
     if not event_id or not name or not email:
         events = db.query(models.Event).all()
@@ -239,9 +239,9 @@ async def register_from_event(
     request: Request, event_id: int, db: Session = Depends(get_db)
 ):
     form = await request.form()
-    name = (form.get("name") or "").strip()
-    email = (form.get("email") or "").strip()
-    selected_topics = form.getlist("topics")
+    name = str(form.get("name") or "").strip()
+    email = str(form.get("email") or "").strip()
+    selected_topics = [str(topic) for topic in form.getlist("topics")]
 
     if not name or not email:
         return RedirectResponse(
