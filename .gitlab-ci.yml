@@ -1,5 +1,6 @@
 variables:
   RUFF_CACHE_DIR: ".ruff_cache_disabled"
+
 default:
   before_script:
     - python --version
@@ -35,10 +36,10 @@ test:
   stage: test
   script:
     - pip install -r requirements-dev.txt
-    - pytest tests
+    - - python -m pytest tests
 
 coverage:
   stage: coverage
   script:
     - pip install -r requirements-dev.txt
-    - pytest tests --cov=. --cov-report=xml --cov-report=term-missing
+    - python -m pytest tests --cov=. --cov-report=xml --cov-report=term-missing
