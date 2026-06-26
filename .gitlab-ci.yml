@@ -1,3 +1,5 @@
+image: python:3.11
+
 variables:
   RUFF_CACHE_DIR: "tmp/ruff_cache"
   MYPY_CACHE_DIR: "tmp/mypy_cache"
