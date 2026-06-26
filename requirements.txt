@@ -79,3 +79,4 @@ uv==0.11.19
 uvicorn==0.20.0
 watchfiles==1.2.0
 websockets==16.0
+psycopg2-binary==2.9.10
